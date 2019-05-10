@@ -1,0 +1,69 @@
+<style type="text/css">
+@media screen and (min-width: 940px){
+		body{
+			background: purple;
+		}
+	}
+@media screen and (max-width: 940px){
+		body{
+			background: green;
+		}
+	}
+@media screen and (max-width: 600px){
+		body{
+			background: orange;
+		}
+	}
+	@media screen and (max-width: 400px){
+		body{
+			background: red;
+		}
+	}
+</style>
+<body>
+	
+</body>
+<script type="text/javascript">
+window.onload = function(){
+	var input = document.createElement('input');
+	input.setAttribute = ('placeholder', 'введите имя');
+	input.id = "input";
+	document.body.appendChild(input)
+	var btn = document.createElement('button');
+	btn.className = "btn";
+	btn.innerHTML = "go"
+	btn.setAttribute('onclick', 'star()')
+	document.body.appendChild(btn)
+}
+
+function star() {
+		fetch('https://gist.githubusercontent.com/raine/cd11686e0b8a4a43bbf6/raw/people.json')
+		.then(data => data.json())
+		.then(data => data)
+		.then(function (data){
+			console.log(data)
+			var name = document.getElementById('input').value;	
+			for(var i=0; i < data.length; i++){
+				if(data[i].name.includes(name)){
+					var div = document.createElement('div');
+					div.id = "card";
+					div.innerHTML="<p>"+data[i].name+"</p>"; 
+					document.body.appendChild(div);
+
+					fetch('https://randomuser.me/api/?results=50')
+					.then(image => image.json())
+					.then(image => image)
+					.then(function (image){
+
+					var img = document.createElement('img');
+					img.setAttribute('src', image['results'][2]['picture']['large'])
+					img.style.width = '250px';
+					img.style.height = '250px';
+					div.appendChild(img)
+				})
+				}
+
+			}
+			})
+}
+</script>
